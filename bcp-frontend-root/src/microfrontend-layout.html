@@ -1,0 +1,48 @@
+<single-spa-router>
+  <!--
+
+    This is the single-spa Layout Definition for your microfrontends.
+    See https://single-spa.js.org/docs/layout-definition/ for more information.
+
+  -->
+
+  <!-- Example layouts you might find helpful:
+
+  <nav>
+    <application name="@org/navbar"></application>
+  </nav>
+  <route path="settings">
+    <application name="@org/settings"></application>
+  </route>
+
+  -->
+
+  <main class="h-screen flex flex-col">
+    <!-- gnb -->
+    <section class="bg-slate-200 p-5">
+      <application name="@bcp/frontend-gnb"></application>
+    </section>
+
+    <div class="flex-grow flex flex-row">
+      <!-- snb -->
+      <div class="w-1/6 bg-slate-100">
+        <application name="@bcp/frontend-snb"></application>
+      </div>
+
+      <div class="flex-grow flex flex-col">
+        <!-- mdi -->
+        <div class="bg-slate-100 h-10">
+          <application name="@bcp/frontend-mdi"></application>
+        </div>
+
+        <!-- nexacro -->
+        <route path="nexacro">
+          <div class="flex-grow">
+            <application name="@bcp/frontend-nexacro"></application>
+          </route>
+        </div>
+        <route default> </route>
+      </div>
+    </div>
+  </main>
+</single-spa-router>

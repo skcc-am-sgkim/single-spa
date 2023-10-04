@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="Application_Desktop" screenid="Desktop_screen" onload="Application_onload">
+    <Layout>
+      <MainFrame id="mainframe" showtitlebar="true" showstatusbar="true" left="0" top="0" width="1280" height="720" titletext="TopLeftFrame">
+        <VFrameSet id="VFrameSet00" separatesize="50,*" border="0px none">
+          <Frames>
+            <ChildFrame id="TopFrame" showtitlebar="false" showstatusbar="false" formurl="FrameBase::Form_Top.xfdl" border="0px none" background="#bce0ff"/>
+            <HFrameSet id="HFrameSet00" separatesize="200,*" border="0px none">
+              <Frames>
+                <ChildFrame id="LeftFrame" showtitlebar="false" showstatusbar="false" formurl="FrameBase::Form_Left.xfdl" border="0px none" background="aliceblue"/>
+                <VFrameSet id="VFrameSet00" separatesize="50,*" border="0px none">
+                  <Frames>
+                    <ChildFrame id="ChildFrame00" formurl="FrameBase::Form_Mdi.xfdl" showtitlebar="false" dragmovetype="none" border="0px none"/>
+                    <FrameSet id="FrameSet00" border="0px none"/>
+                  </Frames>
+                </VFrameSet>
+              </Frames>
+            </HFrameSet>
+          </Frames>
+        </VFrameSet>
+      </MainFrame>
+    </Layout>
+  </Application>
+  <Script type="xscript5.1"><![CDATA[include "js::lib.xjs";
+
+this.Application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)
+{
+	const menuId = obj.gvMenuId;
+    const intLevel = obj.gds_menu.lookup("MENU_ID", menuId, "MENU_LEVEL");
+	if(menuId) {
+		obj.mainframe.VFrameSet00.HFrameSet00.set_separatesize("0,*");
+		obj.mainframe.VFrameSet00.set_separatesize("0,*");
+		
+		this.gfn_openMenu(menuId);
+	}
+};]]></Script>
+</ADL>

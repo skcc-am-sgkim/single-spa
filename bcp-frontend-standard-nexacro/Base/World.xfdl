@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Hello" width="1280" height="720" titletext="New Form" border="0px none">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Static id="Static00_00" taborder="1" text="World Page" left="40" top="30" width="120" height="60" font="bold 20px/normal &quot;Malgun Gothic&quot;"/>
+        <Button id="Button00" taborder="1" text="common-component-02" left="40" top="115" width="189" height="50" onclick="Button00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "js::lib.xjs";
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.gfn_showPlatformComponent("platform-common-component-02");
+};
+]]></Script>
+  </Form>
+</FDL>

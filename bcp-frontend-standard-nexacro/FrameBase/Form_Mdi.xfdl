@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Mdi" width="1280" height="50" titletext="New Form" scrolltype="none" background="#efefef">
+    <Layouts>
+      <Layout height="50" mobileorientation="landscape" width="1280">
+        <Static id="Static00" taborder="0" text="MDI frame" left="40" top="0" width="120" height="50" font="bold 14px/normal &quot;Malgun Gothic&quot;" color="#303030"/>
+      </Layout>
+    </Layouts>
+  </Form>
+</FDL>

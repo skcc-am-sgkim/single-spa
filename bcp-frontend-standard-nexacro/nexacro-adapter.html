@@ -1,0 +1,95 @@
+<!-- DOCTYPE : DOCTYPE declaration -->
+<!DOCTYPE html>
+<html > <!-- LANGUAGE : locale setting (value of location property in Environment) -->
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=1, initial-scale=0.1, width=device-width, target-densitydpi=device-dpi">
+	<!-- META_CHECKVERSION : Add if value of checkversion property in Envrionment is true -->
+
+	
+	<!-- FAVICON : favion setting (value of icon property in Environment. add to value of icon property in Environment) -->
+
+	
+	<!-- USERFONT_STYLE : userfont style setting (value of userfontid property in Environment. crate contents contained in xfont file specified userfontid property in Environment) -->
+
+	
+	<!-- FRAMEWORK_LIBRARY : framework lodaing path (list of scripts files in the Framework.json file) -->
+    <script src="./nexacrolib/framework/Framework.js" defer></script>
+	
+	<!-- COMPONENTS_LIBRARY : commonent lodaing path (list of script file in json file specified in the TypeDefinition module) -->
+    <script src="./nexacrolib/component/CompBase.js" defer></script>
+    <script src="./nexacrolib/component/ComComp.js" defer></script>
+    <script src="./nexacrolib/component/Grid.js" defer></script>
+    <script src="./nexacrolib/component/ListView.js" defer></script>
+    <script src="./nexacrolib/component/DeviceAPI.js" defer></script>
+	
+	<!-- ENVIRONMENT_LIBRARY : application environment path (path of Environment.xml.js) -->
+    <script src="./environment.xml.js" defer></script>
+  
+  <!-- SPLASH_DEFINE_STYLE : Defines the style of the splash screen that is visible while modules are loading -->
+  <style>.loader { position: absolute; left: 50%; top: 50%; z-index: 1; width: 150px; height: 150px; margin: -75px 0 0 -75px; border: 16px solid #f3f3f3; border-radius: 50%; border-top: 16px solid #3498db; -webkit-animation: spin 2s linear infinite; animation: spin 2s linear infinite; } @-webkit-keyframes spin { 0% { -webkit-transform: rotate(0deg); } 100% { -webkit-transform: rotate(360deg); } } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+	
+	<title></title>
+</head>
+<body style="margin:0;border:none;-ms-touch-action:none;" onload="oninitframework()">
+	<!-- SPLASH_SHOW_STYLE : Adds the splash screen that is visible while modules are loading -->
+    <div class="loader" id="loader"/>
+  
+	<script>
+	function oninitframework()
+	{
+		/* SPLASH_HIDE_STYLE : Hides the splash screen when modules finish loading */
+        var loader = document.getElementById("loader");
+        if (loader) loader.style.display="none";
+    
+		/* parameter information */
+		var urlParams = {};
+		(function () {
+			var match,
+			pl     = /\+/g,
+			search = /([^&=]+)=?([^&]*)/g,
+			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			query  = window.location.search.substring(1);
+			while (match = search.exec(query)) { urlParams[decode(match[1])] = decode(match[2]); }
+			})();
+		
+        // 아래 주석처리함 !!!!!!!!!!!!!!!!!!!!!!!!!!
+		// nexacro._launch_screenid = urlParams.screenid;
+
+        nexacro.setInitialVariable("application", "gvMenuId", urlParams.menu);
+        console.log("adapter.html params : " + urlParams.menu);
+
+		/* SCREEN_INFORMATION : create screen information defined in Environment > ScreenDefinition */
+		var screeninfo = [
+        {"id":"Desktop_screen","type":"desktop","themeid":"theme::blue","xadl":"Application_Desktop.xadl.js"}
+		];
+		
+		nexacro._initHTMLSysEvent(window, document);
+		nexacro._initEnvironment(screeninfo);
+		/* create internal iframe */
+		/* USERFONT_INFORMATION : userfontid property is specified in the Environment */
+		nexacro._prepareManagerFrame(onloadframework);
+
+		window.addEventListener('message', (event) => {
+			// alert(`nexacro-adapter.html Received: \n${JSON.stringify(event.data,null,2)}`);
+			console.log('nexacro-adapter.html Received: \n', JSON.stringify(event.data,null,2));
+
+			var objApp = nexacro.getApplication();
+			objApp.gfn_messageReceved(event.data);
+		});
+	}
+	function onloadframework()
+	{
+		/* application loading */
+		nexacro._loadADL();
+	}
+	function onfinalframework()
+	{
+		/* application exit */
+	}
+	</script>
+	
+</body>
+</html>  
+  

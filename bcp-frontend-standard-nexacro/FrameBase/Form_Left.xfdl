@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Left" width="200" height="670" titletext="Form_Left">
+    <Layouts>
+      <Layout width="200" height="670" screenid="Desktop_screen">
+        <Grid id="Grid00" taborder="0" left="0" top="0" binddataset="gds_menu" treeinitstatus="expand,all" treeusecheckbox="false" right="0" bottom="0" oncellclick="Grid00_oncellclick" border="0px none" background="aliceblue">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="200"/>
+              </Columns>
+              <Rows>
+                <Row size="24"/>
+              </Rows>
+              <Band id="body">
+                <Cell text="bind:MENU_NAME" displaytype="treeitemcontrol" edittype="tree" treelevel="bind:MENU_LEVEL" border="0px solid #dbdee2"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "js::lib.xjs";
+
+this.Grid00_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+    var objApp = nexacro.getApplication();
+    var menuId  = objApp.gds_menu.getColumn(e.row, "MENU_ID");
+	
+	this.gfn_openMenu(menuId);
+};
+]]></Script>
+  </Form>
+</FDL>

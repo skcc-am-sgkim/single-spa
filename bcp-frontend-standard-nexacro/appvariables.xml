@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppVariables version="2.0">
+  <Datasets>
+    <Dataset id="gds_menu">
+      <ColumnInfo>
+        <Column id="MENU_ID" type="STRING" size="256"/>
+        <Column id="MENU_NAME" type="STRING" size="256"/>
+        <Column id="MENU_LEVEL" type="INT" size="256"/>
+        <Column id="FORM_URL" type="STRING" size="256"/>
+      </ColumnInfo>
+      <Rows>
+        <Row>
+          <Col id="MENU_NAME">Main Menu1</Col>
+          <Col id="MENU_LEVEL">0</Col>
+          <Col id="MENU_ID">1</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_NAME">Sub Menu1</Col>
+          <Col id="MENU_LEVEL">1</Col>
+          <Col id="MENU_ID">2</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_NAME">Hello</Col>
+          <Col id="MENU_LEVEL">2</Col>
+          <Col id="MENU_ID">3</Col>
+          <Col id="FORM_URL">Base::Hello.xfdl</Col>
+        </Row>
+        <Row>
+          <Col id="MENU_NAME">World</Col>
+          <Col id="MENU_LEVEL">2</Col>
+          <Col id="MENU_ID">4</Col>
+          <Col id="FORM_URL">Base::World.xfdl</Col>
+        </Row>
+      </Rows>
+    </Dataset>
+  </Datasets>
+  <Variables>
+    <Variable id="gvMenuId"/>
+  </Variables>
+  <DataObjects/>
+</AppVariables>

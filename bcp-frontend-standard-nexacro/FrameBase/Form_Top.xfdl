@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Top" width="1280" height="50" titletext="Form_Top" background="transparent">
+    <Layouts>
+      <Layout width="1280" height="50" screenid="Desktop_screen">
+        <Menu id="Menu00" taborder="0" left="200" top="0" width="140" height="50" innerdataset="gds_menu" captioncolumn="MENU_NAME" idcolumn="MENU_ID" levelcolumn="MENU_LEVEL" userdatacolumn="FORM_URL" onmenuclick="Menu00_onmenuclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[include "js::lib.xjs";
+
+this.Menu00_onmenuclick = function(obj:nexacro.Menu,e:nexacro.MenuClickEventInfo)
+{
+	this.gfn_openMenu(e.id);
+};]]></Script>
+  </Form>
+</FDL>

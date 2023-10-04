@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[this.gfn_openMenu = function (menuId) {
+
+	const objApp = nexacro.getApplication();
+	const strURL = objApp.gds_menu.lookup("MENU_ID", menuId, "FORM_URL");
+	const intLevel = objApp.gds_menu.lookup("MENU_ID", menuId, "MENU_LEVEL");
+
+	if(!menuId || intLevel <= 1) return;
+
+	console.log("loaded menu id : " + menuId);
+	console.log("loaded strURL : " + strURL);
+	console.log("loaded intLevel : " + intLevel);
+	
+	if (menuId.length <= 0) return;
+
+	var arrObj = objApp.mainframe.VFrameSet00.HFrameSet00.VFrameSet00.FrameSet00.all;
+	for (var i = 0; i < arrObj.length; i++) {
+		if (arrObj[i].name == menuId) {
+		  arrObj[i].setFocus();
+		  return;
+		}
+	}
+
+	var objChildFrame = new ChildFrame(menuId, 0, 0, 800, 600);
+	objChildFrame.set_formurl(strURL);
+	objChildFrame.set_resizable(false);
+	objChildFrame.set_openstatus("normal");
+	objChildFrame.set_border("0px solid #ddd");
+	objChildFrame.set_showtitlebar(false);
+	objChildFrame.set_right("100%");
+	objChildFrame.set_bottom("100%");
+	objChildFrame.set_dragmovetype("none");
+
+	objApp.mainframe.VFrameSet00.HFrameSet00.VFrameSet00.FrameSet00.addChild(menuId,objChildFrame);
+	objChildFrame.show();
+};
+
+this.gfn_messageReceved = function (pData) {
+	console.log("nexacro gfn_messageReceved : " + JSON.stringify(event.data,null,2));
+	this.gfn_openMenu(pData.payload.menu);
+};
+
+this.gfn_sendMessage = function(pComponentId) {
+	window.parent.postMessage(
+      { source: "nexacro", event: "component", payload: { component: pComponentId } },
+      "*"
+    );
+}
+
+this.gfn_showPlatformComponent = function(pComponentId) {
+	window.parent.postMessage(
+      { source: "nexacro", event: "component", payload: { component: pComponentId } },
+      "*"
+    );
+}
+]]></Script>
