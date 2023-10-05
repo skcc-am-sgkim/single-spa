@@ -1,0 +1,28 @@
+{
+  "name": "sspa-poc",
+  "version": "1.0.0",
+  "description": "Single SPA POC",
+  "main": "index.js",
+  "scripts": {
+    "init": "npm install && concurrently 'npm:install-*'",
+    "start": "concurrently 'npm:start-*'",
+    "start-root-config": "cd root-config && npm run start",
+    "start-navbar-react": "cd navbar-react && npm run start",
+    "start-app1-react": "cd app1-react && npm run start",
+    "start-app2-react-nexacro": "cd app2-react-nexacro && npm run start",
+    "start-app3-vue": "cd app3-vue && npm run serve",
+    "start-import-map": "cd import-map && npm run start",
+    "install-root-config": "cd root-config && npm install",
+    "install-navbar-react": "cd navbar-react && npm install",
+    "install-app1-react": "cd app1-react && npm install",
+    "install-app2-react-nexacro": "cd app2-react-nexacro && npm install",
+    "install-app3-vue": "cd app3-vue && npm install",
+    "install-import-map": "cd import-map && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

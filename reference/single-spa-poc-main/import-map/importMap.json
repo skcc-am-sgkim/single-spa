@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "@bizp/root-config": "//localhost:9000/bizp-root-config.js",
+    "@bizp/navbar": "//localhost:9001/bizp-navbar.js",
+    "@bizp/app1-react": "//localhost:9002/bizp-app1-react.js",
+    "@bizp/app2-react-nexacro": "//localhost:9003/bizp-app2-react-nexacro.js",
+    "@bizp/app3-vue": "//localhost:9004/js/app.js"
+  }
+}

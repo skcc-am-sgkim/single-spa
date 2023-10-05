@@ -1,0 +1,48 @@
+<single-spa-router>
+  <!--
+
+    This is the single-spa Layout Definition for your microfrontends.
+    See https://single-spa.js.org/docs/layout-definition/ for more information.
+
+  -->
+
+  <!-- Example layouts you might find helpful:
+
+  <nav>
+    <application name="@org/navbar"></application>
+  </nav>
+  <route path="settings">
+    <application name="@org/settings"></application>
+  </route>
+
+  -->
+
+  <!-- 방법 1: 전역 어플리케이션에서 SideNav 소유 -->
+  <nav>
+    <application name="@bizp/navbar"></application>
+  </nav>
+  <section style="display: flex; flex: auto; flex-direction: row;">
+    <aside style="width: 200; background-color: aquamarine; padding: 1rem;">side-bar</aside>
+    <main style="display: flex; padding: 1rem;">
+      <route default>
+        <h1>404</h1>
+      </route>
+      <route path="app1-react">
+        <application name="@bizp/app1-react"></application>
+      </route>
+      <route path="app2-react-nexacro">
+        <application name="@bizp/app2-react-nexacro"></application>
+      </route>
+      <route path="app3-vue">
+        <application name="@bizp/app3-vue"></application>
+      </route>
+    </main>
+  </section>
+  <!-- 방법 2: 각 어플리케이션에서 SideNav 소유 -->
+  <!-- <nav>
+    <application name="@bcm/navbar"></application>
+  </nav>
+  <route default>
+    <application name="@single-spa/welcome"></application>
+  </route> -->
+</single-spa-router>
