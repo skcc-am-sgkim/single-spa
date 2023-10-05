@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "concurrently 'npm:start*'",
     "start": "webpack serve --port 9000 --env isLocal",
-    "start-gnb": "cd ../bcp-frontend-gnb && npm start",
+    "start-gnb": "cd ../bcp-frontend-gnb-01 && npm start",
     "start-snb": "cd ../bcp-frontend-snb && npm start",
     "start-mdi": "cd ../bcp-frontend-mdi && npm start",
     "start-nexacro": "cd ../bcp-frontend-nexacro && npm start",
