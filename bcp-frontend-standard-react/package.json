@@ -1,7 +1,7 @@
 {
   "name": "@bcp/frontend-standard-react",
   "scripts": {
-    "start": "webpack serve --port 9002",
+    "start": "webpack serve --port 9006",
     "start:standalone": "webpack serve --env standalone",
     "build": "concurrently npm:build:*",
     "build:webpack": "webpack --mode=production",
