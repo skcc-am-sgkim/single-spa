@@ -1,25 +1,21 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
+import { unionBy } from "lodash";
 import { navigateToUrl } from "single-spa";
-import { TabWarp, TabItem } from "./style";
 import store from "store";
 import eventsPlugin from "store/plugins/events";
-
+import { TabItem, TabWarp } from "./style";
 // import About from "@bcp/frontend-gnb/pages/About";
 
-import {
-  getLocalStorage,
-  setLocalStorage,
-  LOCAL_STORAGE_KEY,
-} from "@bcp/frontend-shared";
+import Parcel from "single-spa-react/parcel";
+
+import { LOCAL_STORAGE_KEY, WHITE_LIST, getTitle } from "@bcp/frontend-shared";
 
 function insertAndShift(arr, from, to) {
   let cutOut = arr.splice(from, 1)[0];
   arr.splice(to, 0, cutOut);
   return arr;
 }
-
-let count = 9;
 
 store.addPlugin(eventsPlugin);
 
@@ -42,39 +38,46 @@ const CustomTab = () => {
     evn.stopPropagation();
     const idx = tabInfo.findIndex((m) => m.id === item.id);
 
-    let active = "";
-    if (idx > -1 && activeKey) {
-      active = tabInfo[idx - 1]
-        ? tabInfo[idx - 1]?.id
-        : tabInfo[idx + 1]?.id
-        ? tabInfo[idx + 1]?.id
-        : tabInfo[idx].id;
+    const filteredTabInfo = tabInfo.filter((m) => m.id !== item.id);
+    setTabInfo(filteredTabInfo);
+    store.set("TAB_INFO", filteredTabInfo);
 
-      setActiveKey(active || "");
-      navigateToUrl(`/${active}`);
-    }
     if (tabInfo.length === 1) {
       navigateToUrl("/");
+      return;
     }
-    setTabInfo(tabInfo.filter((m) => m.id !== item.id));
 
-    store.set(
-      "TAB_INFO",
-      tabInfo.filter((m) => m.id !== item.id)
-    );
+    let active = "";
+    if (idx > -1 && activeKey) {
+      let prevTab = tabInfo[idx - 1];
+      let nextTab = tabInfo[idx + 1];
+      if (prevTab) {
+        active = prevTab.id;
+      } else if (nextTab) {
+        active = nextTab.id;
+      } else {
+        active = tabInfo[idx].id;
+      }
+    }
+    active = active || "";
+    setActiveKey(active);
+    navigateToUrl(active || "/");
   };
 
   const tabDrop = (id, index) => {
     const oldIndex = [...tabInfo].findIndex((m) => m.id === id);
     const newData = insertAndShift([...tabInfo], oldIndex, index);
     setTabInfo(newData);
+    store.set("TAB_INFO", newData);
   };
 
   useEffect(() => {
     window.addEventListener("TAB_INFO", () => {
+      // console.log("event TAB_INFO");
       const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO);
+      const pathname = window.location.pathname;
       const storeActiveTabInfo = storeTabInfo?.filter(
-        (m) => m.isActive === true
+        (m) => m.id === pathname
       )[0];
 
       setTabInfo(storeTabInfo);
@@ -83,6 +86,68 @@ const CustomTab = () => {
     return () => {
       window.removeEventListener("TAB_INFO");
     };
+  }, []);
+
+  const initTab = () => {
+    const pathname = window.location.pathname;
+
+    const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO);
+
+    storeTabInfo?.map((m) => {
+      m.isActive = m.id === pathname;
+    });
+
+    /* 
+      case 1. 탭 0개, 타켓 탭 미존재, 주소로 접속  : O
+      case 2. 탭 x개, 타겟 탭 존재, 주소로 접속  : O
+      case 3. 탭 x개, 타켓 탭 미존재, 주소로 접속 : O
+    */
+
+    store.set("TAB_INFO", storeTabInfo);
+    if (WHITE_LIST.includes(pathname)) {
+      // console.log("run?", pathname);
+      let finalTabInfo = storeTabInfo;
+      if (storeTabInfo) {
+        finalTabInfo = unionBy(
+          [
+            ...storeTabInfo,
+            {
+              id: pathname,
+              title: getTitle(pathname),
+              isActive: true,
+            },
+          ],
+          "id"
+        );
+      } else {
+        finalTabInfo = [
+          {
+            id: pathname,
+            title: getTitle(pathname),
+            isActive: true,
+          },
+        ];
+      }
+      store.set("TAB_INFO", finalTabInfo);
+    }
+
+    window.dispatchEvent(new Event("TAB_INFO"));
+  };
+
+  // url 경로가 변경 되었을때
+  useEffect(() => {
+    window.addEventListener("popstate", function (event) {
+      initTab();
+    });
+    return () => {
+      window.removeEventListener("popstate");
+    };
+  }, []);
+
+  // 앱 시작했을때 (주소창에 주소를 바로 쳤을때)
+  useEffect(() => {
+    initTab();
+    // console.log("init");
   }, []);
 
   if (
@@ -94,7 +159,7 @@ const CustomTab = () => {
     return <></>;
   }
   return (
-    <>
+    <div>
       {/* <button onClick={addHandle}>Add{count}</button> */}
       <TabWarp
         activeKey={activeKey}
@@ -105,7 +170,7 @@ const CustomTab = () => {
         {tabInfo.map((m, idx) => {
           return (
             <TabItem key={idx} id={m.id} draggable={true}>
-              <a href={`/${m.id}`} onClick={navigateToUrl}>
+              <a href={`${m.id}`} onClick={navigateToUrl}>
                 {m.title}
               </a>
               <button
@@ -119,8 +184,28 @@ const CustomTab = () => {
         })}
       </TabWarp>
       {/* <About /> */}
-      {/* <div>{activeKey}</div> */}
-    </>
+
+      <div style={{ display: activeKey.includes("react") ? "block" : "none" }}>
+        <Parcel
+          config={() => System.import("@bcp/frontend-parcel-react")}
+          wrapWith="div"
+        />
+      </div>
+      <div
+        style={{ display: activeKey.includes("nexacro") ? "block" : "none" }}
+      >
+        <Parcel
+          config={() => System.import("@bcp/frontend-parcel-nexacro")}
+          wrapWith="div"
+        />
+      </div>
+      <div style={{ display: activeKey.includes("vue") ? "block" : "none" }}>
+        <Parcel
+          config={() => System.import("@bcp/frontend-parcel-vue")}
+          wrapWith="div"
+        />
+      </div>
+    </div>
   );
 };
 

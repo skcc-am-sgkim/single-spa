@@ -28,7 +28,7 @@ export default function Menu({ menuList }) {
         <ul className="px-10 pt-3 list-disc list-outside leading-8">
           <li>
             <a
-              href="/nexacro?menu=3"
+              href="/nexacro/menu=3"
               className="underline "
               onClick={navigateToUrl}
             >
@@ -37,7 +37,7 @@ export default function Menu({ menuList }) {
           </li>
           <li>
             <a
-              href="/nexacro?menu=4"
+              href="/nexacro/menu=4"
               className="underline "
               onClick={navigateToUrl}
             >

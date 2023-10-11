@@ -2,18 +2,23 @@
 import React from "react";
 
 export default function Root(props) {
+  const pathname = window.location.pathname;
+  const param = pathname.split("/").pop();
+
   const [searchParams, setSearchParams] = React.useState("");
-  var iframeUrl = `http://localhost:4098/nexacro-adapter.html${searchParams}`;
+  var iframeUrl = `http://localhost:4098/nexacro-adapter.html?${searchParams}`;
 
   // 브라우져에서 직접 url을 등록한 경우 처리
   if (!searchParams) {
-    iframeUrl = `http://localhost:4098/nexacro-adapter.html${location.search}`;
+    iframeUrl = `http://localhost:4098/nexacro-adapter.html?${param}`;
   }
 
   React.useEffect(() => {
-    const onChangeState = (state, title, url, isReplace) =>
-      setSearchParams(new URL(url).search.toString());
-
+    const onChangeState = (state, title, url, isReplace) => {
+      const pathname = window.location.pathname;
+      const param = pathname.split("/").pop();
+      setSearchParams(param ?? "");
+    };
     // set onChangeState() listener:
     ["pushState", "replaceState"].forEach((changeState) => {
       // store original values under underscored keys (`window.history._pushState()` and `window.history._replaceState()`):

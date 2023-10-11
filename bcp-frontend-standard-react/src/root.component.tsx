@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 
 export default function Root(props) {
+  const [bgColor, setBgColor] = useState("");
   return (
-    <BrowserRouter basename="/">
+    <BrowserRouter basename="/react">
       <section>
         React Version: {React.version}
         <div>{props.name} is mounted!</div>
@@ -26,7 +27,20 @@ export default function Root(props) {
             <Route path="/" element={<Layout />}>
               <Route index element={<h1>Home</h1>} />
               <Route path="about" element={<h1>About</h1>} />
-              <Route path="dashboard" element={<h1>Dashboard</h1>} />
+              <Route
+                path="dashboard"
+                element={
+                  <>
+                    <h1>Dashboard</h1>
+                    <button
+                      onClick={() => setBgColor("pink")}
+                      style={{ background: bgColor }}
+                    >
+                      클릭
+                    </button>
+                  </>
+                }
+              />
 
               {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
