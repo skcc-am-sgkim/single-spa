@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { unionBy } from "lodash";
 import { navigateToUrl } from "single-spa";
 import store from "store";
-import eventsPlugin from "store/plugins/events";
+
 import { TabItem, TabWarp } from "./style";
 // import About from "@bcp/frontend-gnb/pages/About";
 
@@ -16,8 +16,6 @@ function insertAndShift(arr, from, to) {
   arr.splice(to, 0, cutOut);
   return arr;
 }
-
-store.addPlugin(eventsPlugin);
 
 const CustomTab = () => {
   const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO);

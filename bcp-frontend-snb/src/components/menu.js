@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { navigateToUrl } from "single-spa";
+import { Tab } from "@headlessui/react";
+import { animated, useSpring } from "@react-spring/web";
+import { useState } from "react";
+import closeIcon from "../../assets/svg/close.svg";
+import menuIcon from "../../assets/svg/menu.svg";
 import NexacroMenu from "./NexacroMenu";
 import ReactMenu from "./ReactMenu";
 import VueMenu from "./VueMenu";
-import { Tab } from "@headlessui/react";
-import TestMenu from "./TestMenu";
-import { useSpring, animated } from "@react-spring/web";
-import closeIcon from "../../assets/svg/close.svg";
-import menuIcon from "../../assets/svg/menu.svg";
+import HistoryPanel from "./history/HistoryPanel";
+import TestMenu from "./sideMenu/TestMenu";
 export default function Menu({ menuList }) {
   var w = window.innerWidth;
   const [isVisible, setIsVisible] = useState(true);
@@ -93,7 +93,9 @@ export default function Menu({ menuList }) {
                 <ReactMenu />
                 <VueMenu />
               </Tab.Panel>
-              <Tab.Panel>Content 2</Tab.Panel>
+              <Tab.Panel>
+                <HistoryPanel />
+              </Tab.Panel>
               <Tab.Panel>Content 3</Tab.Panel>
             </Tab.Panels>
           </Tab.Group>

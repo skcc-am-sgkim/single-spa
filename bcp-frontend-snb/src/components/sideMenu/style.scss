@@ -8,7 +8,7 @@
 .szh-menu__item--submenu {
   position: relative;
   &::after {
-    content: url("../../assets/svg/chevron_right.svg");
+    content: url("../../../assets/svg/chevron_right.svg");
     position: absolute;
     right: 0px;
     top: 0px;
@@ -17,7 +17,7 @@
 .szh-menu__item--open {
   background-color: yellow;
   &::after {
-    content: url("../../assets/svg/chevron_left.svg");
+    content: url("../../../assets/svg/chevron_left.svg");
     position: absolute;
     right: 0px;
     top: 0px;
@@ -38,12 +38,12 @@
   }
   > * > * > * > .szh-menu__item--submenu {
     &::after {
-      content: url("../../assets/svg/expand_more.svg");
+      content: url("../../../assets/svg/expand_more.svg");
     }
   }
   > * > * > * > .szh-menu__item--open {
     &::after {
-      content: url("../../assets/svg/expand_less.svg");
+      content: url("../../../assets/svg/expand_less.svg");
     }
   }
 }
