@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@react-spring/web": "^9.7.3",
     "@szhsin/react-menu": "^4.1.0",
     "font-awesome": "^4.7.0",
     "react": "^17.0.2",

@@ -20,9 +20,13 @@ const TestMenu = () => {
             <div style={{ background: open ? "yellow" : "" }}>
               {m.name}
               {open ? (
-                <img src={leftIcon} style={{ display: "inline" }} />
+                <img src={leftIcon} style={{ display: "inline" }} alt="left" />
               ) : (
-                <img src={rightIcon} style={{ display: "inline" }} />
+                <img
+                  src={rightIcon}
+                  style={{ display: "inline" }}
+                  alt="right"
+                />
               )}
             </div>
           )}

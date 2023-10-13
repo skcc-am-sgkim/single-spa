@@ -6,9 +6,5 @@ import Menu from "./components/menu";
 import { menuList } from "./mockup/data";
 
 export default function Root(props) {
-  return (
-    <>
-      <Menu menuList={menuList} />
-    </>
-  );
+  return <Menu menuList={menuList} />;
 }
