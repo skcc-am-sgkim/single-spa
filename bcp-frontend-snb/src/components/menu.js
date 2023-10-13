@@ -18,11 +18,10 @@ export default function Menu({ menuList }) {
     opacity: isVisible ? 1 : 0,
   });
 
-  //div#single-spa-application\:\@bcp\/frontend-snb
   return (
     <animated.div
       className="bg-slate-100"
-      style={{ width: width, position: "relative" }}
+      style={{ width: width, position: "relative", height: "100%" }}
     >
       <animated.div
         style={{ cursor: !isVisible ? "pointer" : "default" }}
@@ -37,7 +36,11 @@ export default function Menu({ menuList }) {
           />
         </button>
         <animated.div
-          style={{ opacity: opacity, pointerEvents: !isVisible ? "none" : "" }}
+          style={{
+            opacity: opacity,
+            overflow: !isVisible ? "hidden" : "",
+            pointerEvents: !isVisible ? "none" : "",
+          }}
         >
           <Tab.Group>
             <Tab.List>
@@ -47,6 +50,44 @@ export default function Menu({ menuList }) {
             </Tab.List>
             <Tab.Panels>
               <Tab.Panel>
+                <p className="font-semibold text-lg mt-10">
+                  Inter-app communication
+                </p>
+                <ul>
+                  <li>
+                    <button
+                      onClick={() => {
+                        window.dispatchEvent(
+                          new CustomEvent("REACT", { detail: "react" })
+                        );
+                      }}
+                    >
+                      To React
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        window.dispatchEvent(
+                          new CustomEvent("VUE", { detail: "vue" })
+                        );
+                      }}
+                    >
+                      To Vue
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        window.dispatchEvent(
+                          new CustomEvent("NEXACRO", { detail: "nexacro" })
+                        );
+                      }}
+                    >
+                      To Nexacro
+                    </button>
+                  </li>
+                </ul>
                 <TestMenu />
                 <NexacroMenu />
                 <ReactMenu />

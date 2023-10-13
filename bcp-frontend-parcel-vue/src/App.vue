@@ -1,4 +1,6 @@
+
 <template>
+  {{ receiver }}
   <h1>Hello Vue3 App!</h1>
   <p>
     <!-- use the router-link component for navigation. -->
@@ -15,10 +17,28 @@
 </template>
  
 <script>
+
 export default {
-  name: 'App',
+  name: 'App', 
   components: {
   }
+  ,
+  data ()
+  {
+    return {
+      receiver: ""
+    }
+  },
+  method: {
+    
+  },
+   mounted () {
+    // let context = this
+    window.addEventListener("VUE", (event) => {
+      // console.log(event, event.detail);
+      this.receiver= event.detail;
+    });
+  },
 }
 </script>
 
