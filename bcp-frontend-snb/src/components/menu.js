@@ -1,13 +1,17 @@
 import { Tab } from "@headlessui/react";
 import { animated, useSpring } from "@react-spring/web";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import closeIcon from "../../assets/svg/close.svg";
 import menuIcon from "../../assets/svg/menu.svg";
 import NexacroMenu from "./NexacroMenu";
 import ReactMenu from "./ReactMenu";
 import VueMenu from "./VueMenu";
-import HistoryPanel from "./history/HistoryPanel";
+import PageList from "./PageList";
 import TestMenu from "./sideMenu/TestMenu";
+import { navigateToUrl } from "single-spa";
+import { useGetFavoriteMenu } from "../hooks/useGetFavoriteMenu";
+import InnerAppCommunication from "./sideMenu/InnerAppCommunication";
+import { getHistoryFromStore } from "@bcp/frontend-shared";
 export default function Menu({ menuList }) {
   var w = window.innerWidth;
   const [isVisible, setIsVisible] = useState(true);
@@ -44,50 +48,28 @@ export default function Menu({ menuList }) {
         >
           <Tab.Group>
             <Tab.List>
-              <Tab>Menu</Tab>
-              <Tab>History</Tab>
-              <Tab>Favorite</Tab>
+              <Tab>
+                <span class="material-symbols-outlined">list</span>
+              </Tab>
+              <Tab>
+                <span class="material-symbols-outlined">history</span>
+              </Tab>
+              <Tab>
+                <span class="material-symbols-outlined ">bookmark</span>
+              </Tab>
             </Tab.List>
             <Tab.Panels>
               <Tab.Panel>
-                <p className="font-semibold text-lg mt-10">
-                  Inter-app communication
-                </p>
                 <ul>
                   <li>
-                    <button
-                      onClick={() => {
-                        window.dispatchEvent(
-                          new CustomEvent("REACT", { detail: "react" })
-                        );
-                      }}
-                    >
-                      To React
-                    </button>
+                    <button onClick={() => navigateToUrl("/")}>Home</button>
                   </li>
                   <li>
-                    <button
-                      onClick={() => {
-                        window.dispatchEvent(
-                          new CustomEvent("VUE", { detail: "vue" })
-                        );
-                      }}
-                    >
-                      To Vue
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => {
-                        window.dispatchEvent(
-                          new CustomEvent("NEXACRO", { detail: "nexacro" })
-                        );
-                      }}
-                    >
-                      To Nexacro
-                    </button>
+                    <button onClick={() => navigateToUrl("/all")}>ALL</button>
                   </li>
                 </ul>
+                <InnerAppCommunication />
+
                 <TestMenu />
                 <NexacroMenu />
                 <ReactMenu />
@@ -96,7 +78,9 @@ export default function Menu({ menuList }) {
               <Tab.Panel>
                 <HistoryPanel />
               </Tab.Panel>
-              <Tab.Panel>Content 3</Tab.Panel>
+              <Tab.Panel>
+                <FavoritePanel />
+              </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
         </animated.div>
@@ -104,3 +88,23 @@ export default function Menu({ menuList }) {
     </animated.div>
   );
 }
+
+const HistoryPanel = () => {
+  const { favList } = useGetFavoriteMenu();
+  const [list, setlist] = useState(getHistoryFromStore());
+
+  useEffect(() => {
+    window.addEventListener("popstate", function (event) {
+      setlist(getHistoryFromStore());
+    });
+    return () => {
+      window.removeEventListener("popstate");
+    };
+  }, []);
+  console.log("list", list);
+  return <PageList list={list} favoriteMenu={favList} />;
+};
+const FavoritePanel = () => {
+  const { list } = useGetFavoriteMenu();
+  return <PageList list={list} favoriteMenu={list} />;
+};

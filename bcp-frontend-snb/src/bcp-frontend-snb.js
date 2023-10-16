@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import singleSpaReact from "single-spa-react";
 import Root from "./root.component";
 import "./tailwind.css";
+export { useGetFavoriteMenu } from "./hooks/useGetFavoriteMenu";
 
 const lifecycles = singleSpaReact({
   React,

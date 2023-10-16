@@ -9,7 +9,13 @@ import { TabItem, TabWarp } from "./style";
 
 import Parcel from "single-spa-react/parcel";
 
-import { LOCAL_STORAGE_KEY, WHITE_LIST, getTitle } from "@bcp/frontend-shared";
+import {
+  LOCAL_STORAGE_KEY,
+  WHITE_LIST,
+  getTitle,
+  saveHistory,
+} from "@bcp/frontend-shared";
+import Sitemap from "../Sitemap/index";
 
 function insertAndShift(arr, from, to) {
   let cutOut = arr.splice(from, 1)[0];
@@ -136,6 +142,13 @@ const CustomTab = () => {
   useEffect(() => {
     window.addEventListener("popstate", function (event) {
       initTab();
+
+      if (event.state?.current) {
+        saveHistory({
+          path: event.state?.current,
+          name: getTitle(event.state?.current),
+        });
+      }
     });
     return () => {
       window.removeEventListener("popstate");
@@ -181,7 +194,11 @@ const CustomTab = () => {
           );
         })}
       </TabWarp>
+
       {/* <About /> */}
+      <div style={{ display: activeKey === "/all" ? "block" : "none" }}>
+        <Sitemap />
+      </div>
 
       <div style={{ display: activeKey.includes("react") ? "block" : "none" }}>
         <Parcel

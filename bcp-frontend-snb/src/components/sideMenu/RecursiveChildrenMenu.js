@@ -18,15 +18,15 @@ const RecursiveChildrenMenu = ({ data }) => {
               {c.children && <RecursiveChildrenMenu data={c} key={c.name} />}
             </SubMenu>
           ) : (
-            <CustomMenuItem {...c} key={c.name} />
+            <CustomMenuItem title={c.name} path={c.url} key={c.name} />
           )
         )}
       </>
     );
-  return <CustomMenuItem {...data} key={data.name} />;
+  return <CustomMenuItem title={data.name} path={data.url} key={data.name} />;
 };
 
-const CustomMenuItem = ({ name, url }) => {
+const CustomMenuItem = ({ title, path }) => {
   const { list } = useGetFavoriteMenu();
   const [isMouseOver, setIsMouseOver] = useState(false);
   const clickHandler = (e) => {
@@ -35,7 +35,7 @@ const CustomMenuItem = ({ name, url }) => {
   };
 
   const onClickFavorite = () => {
-    toggleFavorite({ name, url });
+    toggleFavorite({ title, path });
   };
   return (
     <MenuItem onClick={clickHandler}>
@@ -45,12 +45,12 @@ const CustomMenuItem = ({ name, url }) => {
         onMouseLeave={() => setIsMouseOver(false)}
       >
         <img
-          src={!getFavoriteStatus(url, list) ? StarIcon : StarFilledIcon}
+          src={!getFavoriteStatus(path, list) ? StarIcon : StarFilledIcon}
           alt="star"
           style={{ display: "inline" }}
         />
       </button>
-      <button onClick={() => navigateToUrl(url)}>{name}</button>
+      <button onClick={() => navigateToUrl(path)}>{title}</button>
     </MenuItem>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { menuList } from "../../mockup/data";
+import { menuList } from "@bcp/frontend-shared";
 
 import { Menu } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/core.css";
