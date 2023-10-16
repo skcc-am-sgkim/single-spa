@@ -1,12 +1,13 @@
 import { getFavoriteStatus, toggleFavorite } from "@bcp/frontend-shared";
 import { navigateToUrl } from "single-spa";
-import StarIcon from "../../assets/svg/star.svg";
-import StarFilledIcon from "../../assets/svg/star_filled.svg";
+import StarIcon from "../../../assets/svg/star.svg";
+import StarFilledIcon from "../../../assets/svg/star_filled.svg";
 
-const PageList = ({ list, favoriteMenu }) => {
+export const PageList = ({ list, favoriteMenu, count = 0 }) => {
   return (
     <>
       {list?.map((m, idx) => {
+        if (count > 0 && idx >= count) return null;
         return (
           <div key={m.path ?? idx}>
             <button
@@ -31,5 +32,3 @@ const PageList = ({ list, favoriteMenu }) => {
     </>
   );
 };
-
-export default PageList;

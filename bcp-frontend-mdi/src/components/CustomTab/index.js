@@ -16,6 +16,7 @@ import {
   saveHistory,
 } from "@bcp/frontend-shared";
 import Sitemap from "../Sitemap/index";
+import Home from "../Home/index";
 
 function insertAndShift(arr, from, to) {
   let cutOut = arr.splice(from, 1)[0];
@@ -143,7 +144,7 @@ const CustomTab = () => {
     window.addEventListener("popstate", function (event) {
       initTab();
 
-      if (event.state?.current) {
+      if (event.state?.current && event.state?.current !== "/") {
         saveHistory({
           path: event.state?.current,
           name: getTitle(event.state?.current),
@@ -170,7 +171,7 @@ const CustomTab = () => {
     return <></>;
   }
   return (
-    <div>
+    <div class="w-full">
       {/* <button onClick={addHandle}>Add{count}</button> */}
       <TabWarp
         activeKey={activeKey}
@@ -195,6 +196,11 @@ const CustomTab = () => {
         })}
       </TabWarp>
 
+      <div
+        style={{ display: window.location.pathname === "/" ? "block" : "none" }}
+      >
+        <Home />
+      </div>
       {/* <About /> */}
       <div style={{ display: activeKey === "/all" ? "block" : "none" }}>
         <Sitemap />

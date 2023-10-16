@@ -1,17 +1,18 @@
 import { Tab } from "@headlessui/react";
 import { animated, useSpring } from "@react-spring/web";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { navigateToUrl } from "single-spa";
 import closeIcon from "../../assets/svg/close.svg";
 import menuIcon from "../../assets/svg/menu.svg";
 import NexacroMenu from "./NexacroMenu";
 import ReactMenu from "./ReactMenu";
 import VueMenu from "./VueMenu";
-import PageList from "./PageList";
 import TestMenu from "./sideMenu/TestMenu";
-import { navigateToUrl } from "single-spa";
-import { useGetFavoriteMenu } from "../hooks/useGetFavoriteMenu";
+
+import FavoritePanel from "./FavoritePanel";
+import HistoryPanel from "./HistoryPanel";
 import InnerAppCommunication from "./sideMenu/InnerAppCommunication";
-import { getHistoryFromStore } from "@bcp/frontend-shared";
+
 export default function Menu({ menuList }) {
   var w = window.innerWidth;
   const [isVisible, setIsVisible] = useState(true);
@@ -88,23 +89,3 @@ export default function Menu({ menuList }) {
     </animated.div>
   );
 }
-
-const HistoryPanel = () => {
-  const { favList } = useGetFavoriteMenu();
-  const [list, setlist] = useState(getHistoryFromStore());
-
-  useEffect(() => {
-    window.addEventListener("popstate", function (event) {
-      setlist(getHistoryFromStore());
-    });
-    return () => {
-      window.removeEventListener("popstate");
-    };
-  }, []);
-  console.log("list", list);
-  return <PageList list={list} favoriteMenu={favList} />;
-};
-const FavoritePanel = () => {
-  const { list } = useGetFavoriteMenu();
-  return <PageList list={list} favoriteMenu={list} />;
-};

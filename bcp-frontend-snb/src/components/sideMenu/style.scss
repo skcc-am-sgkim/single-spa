@@ -7,6 +7,7 @@
 
 .szh-menu__item--submenu {
   position: relative;
+  // width: 100%;
   &::after {
     content: url("../../../assets/svg/chevron_right.svg");
     position: absolute;
@@ -31,7 +32,11 @@
 
   li {
     position: static !important;
+    // display: flex;
   }
+  // > * > * > li {
+  //   display: block;
+  // }
   > * > * > * > .szh-menu {
     background-color: pink;
     position: static !important;

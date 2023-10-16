@@ -32,6 +32,7 @@ const CustomMenuItem = ({ title, path }) => {
   const clickHandler = (e) => {
     e.stopPropagation = isMouseOver;
     e.keepOpen = isMouseOver;
+    navigateToUrl(path);
   };
 
   const onClickFavorite = () => {
@@ -40,6 +41,7 @@ const CustomMenuItem = ({ title, path }) => {
   return (
     <MenuItem onClick={clickHandler}>
       <button
+        style={{ flexShrink: 0 }}
         onClick={onClickFavorite}
         onMouseOver={() => setIsMouseOver(true)}
         onMouseLeave={() => setIsMouseOver(false)}
@@ -50,7 +52,7 @@ const CustomMenuItem = ({ title, path }) => {
           style={{ display: "inline" }}
         />
       </button>
-      <button onClick={() => navigateToUrl(path)}>{title}</button>
+      {title}
     </MenuItem>
   );
 };
