@@ -22,13 +22,11 @@ export const useTab = () => {
   )[0];
   const [tabInfo, setTabInfo] = useState(storeTabInfo);
 
-  const [test, setTest] = useState(1);
   const [activeKey, setActiveKey] = useState(storeActiveTabInfo?.id ?? "");
 
   const tabClick = (id, evn) => {
     evn.stopPropagation();
     setActiveKey(id);
-    setTest(test + 1);
   };
   const closeHandle = (item, evn) => {
     evn.stopPropagation();
