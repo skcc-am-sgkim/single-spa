@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { animated, useSpring } from "@react-spring/web";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MenuButton from "../SideMenu/MenuButton";
 
 const SideMenuFrame = (props) => {
   const { children } = props;
-
-  var w = window.innerWidth;
+  const [w, setW] = useState(window.innerWidth);
   const [isVisible, setIsVisible] = useState(true);
   const { width } = useSpring({
     width: isVisible ? `${w * 0.166}px` : "50px",
@@ -14,6 +13,18 @@ const SideMenuFrame = (props) => {
   const { opacity } = useSpring({
     opacity: isVisible ? 1 : 0,
   });
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      (event) => {
+        setW(event.target.innerWidth);
+      },
+      true
+    );
+    return () => {
+      window.removeEventListener("resize");
+    };
+  }, []);
 
   return (
     <animated.div
