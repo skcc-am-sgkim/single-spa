@@ -6,7 +6,7 @@ import { Menu } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/core.css";
 import leftIcon from "../../../assets/svg/chevron_left.svg";
 import rightIcon from "../../../assets/svg/chevron_right.svg";
-import RecursiveChildrenMenu from "./RecursiveChildrenMenu";
+import RecursiveChildrenMenu from "../RecursiveChildrenMenu";
 import "./style.scss";
 
 const TestMenu = () => {
