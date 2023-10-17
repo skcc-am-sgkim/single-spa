@@ -90,7 +90,6 @@ export const useTab = () => {
 
   const initTab = () => {
     const pathname = window.location.pathname;
-
     const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO);
 
     storeTabInfo?.map((m) => {
