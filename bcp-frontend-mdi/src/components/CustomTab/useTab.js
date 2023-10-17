@@ -8,6 +8,8 @@ import {
 import { useEffect, useState } from "react";
 import { navigateToUrl } from "single-spa";
 import { unionBy } from "lodash";
+import { useTabInfoEvent } from "../../hooks/useTabInfoEvent";
+import { useUrlChange } from "../../hooks/useUrlChange";
 
 const insertAndShift = (arr, from, to) => {
   let cutOut = arr.splice(from, 1)[0];
@@ -23,6 +25,25 @@ export const useTab = () => {
   const [tabInfo, setTabInfo] = useState(storeTabInfo);
 
   const [activeKey, setActiveKey] = useState(storeActiveTabInfo?.id ?? "");
+
+  const onFiredTabInfoEvent = ({ storeTabInfo, activeKey }) => {
+    setTabInfo(storeTabInfo);
+    setActiveKey(activeKey);
+  };
+
+  useTabInfoEvent(onFiredTabInfoEvent);
+
+  const onUrlChange = (event) => {
+    initTab();
+
+    if (event.state?.current && event.state?.current !== "/") {
+      saveHistory({
+        path: event.state?.current,
+        title: getTitle(event.state?.current),
+      });
+    }
+  };
+  useUrlChange(onUrlChange);
 
   const tabClick = (id, evn) => {
     evn.stopPropagation();
@@ -64,27 +85,6 @@ export const useTab = () => {
     setTabInfo(newData);
     store.set(LOCAL_STORAGE_KEY.TAB_INFO, newData);
   };
-
-  /*  
-    사용자 정의 이벤트 발생시 실행 
-    로컬스토리지 내의 탭 저장내역이랑 리액트 스테이트랑 동기화 하기 위함
-   */
-  useEffect(() => {
-    window.addEventListener(LOCAL_STORAGE_KEY.TAB_INFO, () => {
-      // console.log("event TAB_INFO");
-      const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO);
-      const pathname = window.location.pathname;
-      const storeActiveTabInfo = storeTabInfo?.filter(
-        (m) => m.id === pathname
-      )[0];
-
-      setTabInfo(storeTabInfo);
-      setActiveKey(storeActiveTabInfo?.id ?? "");
-    });
-    return () => {
-      window.removeEventListener(LOCAL_STORAGE_KEY.TAB_INFO);
-    };
-  }, []);
 
   const initTab = () => {
     const pathname = window.location.pathname;
@@ -131,28 +131,12 @@ export const useTab = () => {
     window.dispatchEvent(new Event(LOCAL_STORAGE_KEY.TAB_INFO));
   };
 
-  // url 경로가 변경 되었을때
-  useEffect(() => {
-    window.addEventListener("popstate", function (event) {
-      initTab();
-
-      if (event.state?.current && event.state?.current !== "/") {
-        saveHistory({
-          path: event.state?.current,
-          title: getTitle(event.state?.current),
-        });
-      }
-    });
-    return () => {
-      window.removeEventListener("popstate");
-    };
-  }, []);
-
   // 앱 시작했을때 (주소창에 주소를 바로 쳤을때)
   useEffect(() => {
     initTab();
     // console.log("init");
   }, []);
+
   return {
     tabInfo,
     tabClick,
