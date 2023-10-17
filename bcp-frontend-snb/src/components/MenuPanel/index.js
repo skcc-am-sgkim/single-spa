@@ -3,8 +3,8 @@ import { navigateToUrl } from "single-spa";
 import NexacroMenu from "../NexacroMenu";
 import ReactMenu from "../ReactMenu";
 import VueMenu from "../VueMenu";
-import TestMenu from "../sideMenu/TestMenu";
-import InnerAppCommunication from "../sideMenu/InnerAppCommunication";
+import SideMenu from "../SideMenu";
+import InnerAppCommunication from "../SideMenu/InnerAppCommunication";
 
 const MenuPanel = () => {
   return (
@@ -19,10 +19,10 @@ const MenuPanel = () => {
       </ul>
       <InnerAppCommunication />
 
-      <TestMenu />
-      <NexacroMenu />
+      <SideMenu />
+      {/* <NexacroMenu />
       <ReactMenu />
-      <VueMenu />
+      <VueMenu /> */}
     </>
   );
 };

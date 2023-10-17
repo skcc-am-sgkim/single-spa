@@ -9,7 +9,7 @@ import rightIcon from "../../../assets/svg/chevron_right.svg";
 import RecursiveChildrenMenu from "../RecursiveChildrenMenu";
 import "./style.scss";
 
-const TestMenu = () => {
+const SideMenu = () => {
   const createMenuButton = (open, m) => (
     <div style={{ background: open ? "yellow" : "" }}>
       {m.name}
@@ -23,7 +23,7 @@ const TestMenu = () => {
 
   return (
     <>
-      <p className="font-semibold text-lg mt-10">UI Test</p>
+      <p className="font-semibold text-lg mt-10">Menu</p>
       {menuList.map((m) => (
         <Menu
           key={m.name}
@@ -37,4 +37,4 @@ const TestMenu = () => {
   );
 };
 
-export default TestMenu;
+export default SideMenu;

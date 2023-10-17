@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { animated, useSpring } from "@react-spring/web";
 import { useState } from "react";
-import MenuButton from "../sideMenu/MenuButton";
+import MenuButton from "../SideMenu/MenuButton";
 
 const SideMenuFrame = (props) => {
   const { children } = props;

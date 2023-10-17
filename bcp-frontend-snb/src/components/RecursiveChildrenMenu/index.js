@@ -1,4 +1,4 @@
-import { SubMenu } from "../sideMenu/SubMenu";
+import { SubMenu } from "../SideMenu/SubMenu";
 import CustomMenuItem from "./CustomMenuItem";
 
 const RecursiveChildrenMenu = ({ data: { children, name, url } }) => {
