@@ -1,9 +1,9 @@
-import { useTab } from "./useTab";
 import { navigateToUrl } from "single-spa";
 import { TabItem, TabWarp } from "./style";
 
-const TabHeader = ({ data }) => {
-  const { tabInfo, tabClick, tabDrop, closeHandle, activeKey } = data;
+const TabHeader = ({
+  data: { tabInfo, tabClick, tabDrop, closeHandle, activeKey },
+}) => {
   if (
     tabInfo === null ||
     tabInfo === "undefined" ||
