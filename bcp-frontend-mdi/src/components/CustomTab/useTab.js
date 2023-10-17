@@ -139,7 +139,7 @@ export const useTab = () => {
       if (event.state?.current && event.state?.current !== "/") {
         saveHistory({
           path: event.state?.current,
-          name: getTitle(event.state?.current),
+          title: getTitle(event.state?.current),
         });
       }
     });
