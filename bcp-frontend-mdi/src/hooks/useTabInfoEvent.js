@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_KEY } from "@bcp/frontend-shared";
 import { useEffect } from "react";
 import store from "store";
-export const useTabInfoEvent = (onEventFired) => {
+export const useTabInfoEvent = (onEventFire) => {
   /*  
     사용자 정의 이벤트 발생시 실행 
     로컬스토리지 내의 탭 저장내역이랑 리액트 스테이트랑 동기화 하기 위함
@@ -15,7 +15,7 @@ export const useTabInfoEvent = (onEventFired) => {
         (m) => m.id === pathname
       )[0];
 
-      onEventFired?.({ storeTabInfo, activeKey: storeActiveTabInfo?.id ?? "" });
+      onEventFire?.({ storeTabInfo, activeKey: storeActiveTabInfo?.id ?? "" });
     });
     return () => {
       window.removeEventListener(LOCAL_STORAGE_KEY.TAB_INFO);

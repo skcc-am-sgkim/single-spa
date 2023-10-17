@@ -26,12 +26,12 @@ export const useTab = () => {
 
   const [activeKey, setActiveKey] = useState(storeActiveTabInfo?.id ?? "");
 
-  const onFiredTabInfoEvent = ({ storeTabInfo, activeKey }) => {
+  const onTabInfoEventFire = ({ storeTabInfo, activeKey }) => {
     setTabInfo(storeTabInfo);
     setActiveKey(activeKey);
   };
 
-  useTabInfoEvent(onFiredTabInfoEvent);
+  useTabInfoEvent(onTabInfoEventFire);
 
   const onUrlChange = (event) => {
     initTab();
