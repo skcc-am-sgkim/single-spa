@@ -7,7 +7,7 @@ import HistoryPanel from "./HistoryPanel";
 import MenuPanel from "./MenuPanel";
 import SideMenuFrame from "./SideMenuFrame";
 
-export default function Menu({ menuList }) {
+export default function Menu() {
   return (
     <SideMenuFrame>
       <Tab.Group>

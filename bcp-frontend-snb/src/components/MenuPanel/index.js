@@ -1,8 +1,8 @@
 import { navigateToUrl } from "single-spa";
 
-import NexacroMenu from "../NexacroMenu";
-import ReactMenu from "../ReactMenu";
-import VueMenu from "../VueMenu";
+// import NexacroMenu from "../NexacroMenu";
+// import ReactMenu from "../ReactMenu";
+// import VueMenu from "../VueMenu";
 import SideMenu from "../SideMenu";
 import InnerAppCommunication from "../SideMenu/InnerAppCommunication";
 
