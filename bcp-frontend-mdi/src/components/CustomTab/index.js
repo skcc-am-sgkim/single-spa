@@ -182,7 +182,11 @@ const CustomTab = () => {
         {tabInfo.map((m, idx) => {
           return (
             <TabItem key={idx} id={m.id} draggable={true}>
-              <a href={`${m.id}`} onClick={navigateToUrl}>
+              <a
+                href={`${m.id}`}
+                onClick={navigateToUrl}
+                style={{ padding: "3px 7px" }}
+              >
                 {m.title}
               </a>
               <button

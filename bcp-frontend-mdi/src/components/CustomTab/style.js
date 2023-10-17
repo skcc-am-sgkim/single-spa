@@ -19,7 +19,7 @@ export const TabWarp = styled(Tabs)`
 
 export const TabItem = styled(Tab)`
   background-color: #b9b9b9;
-  padding: 3px 7px;
+  padding: 0;
   border-radius: 5px 5px 0 0;
   user-select: none;
   &.w-active {
