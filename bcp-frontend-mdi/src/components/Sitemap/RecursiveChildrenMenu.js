@@ -45,9 +45,8 @@ const CustomLink = ({ data: { url, name } }) => {
       <button onClick={() => toggleFavorite({ path: url, title: name })}>
         <span
           class={
-            !getFavoriteStatus(url, list)
-              ? "material-symbols-outlined"
-              : "material-symbols-outlined fill"
+            "material-symbols-outlined" +
+            (!getFavoriteStatus(url, list) ? "" : " fill")
           }
         >
           star
