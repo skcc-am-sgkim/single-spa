@@ -38,16 +38,14 @@ const RecursiveChildrenMenu = ({ data }) => {
   return <CustomLink data={data} />;
 };
 
-const CustomLink = ({ data }) => {
+const CustomLink = ({ data: { url, name } }) => {
   const { list } = useGetFavoriteMenu();
   return (
     <>
-      <button
-        onClick={() => toggleFavorite({ path: data.url, title: data.name })}
-      >
+      <button onClick={() => toggleFavorite({ path: url, title: name })}>
         <span
           class={
-            !getFavoriteStatus(data.url, list)
+            !getFavoriteStatus(url, list)
               ? "material-symbols-outlined"
               : "material-symbols-outlined fill"
           }
@@ -55,8 +53,8 @@ const CustomLink = ({ data }) => {
           star
         </span>
       </button>
-      <a href={data.url} onClick={navigateToUrl}>
-        {data.name}
+      <a href={url} onClick={navigateToUrl}>
+        {name}
       </a>
     </>
   );
