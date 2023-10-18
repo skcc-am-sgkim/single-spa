@@ -64,12 +64,16 @@ export const useTab = () => {
     let newActiveTabKey = "";
     if (idx > -1 && activeTabKey) {
       const prevTab = tabInfo[idx - 1];
-      const nextTab = tabInfo[idx + 1];
       if (prevTab) {
         newActiveTabKey = prevTab.id;
-      } else if (nextTab) {
+      }
+
+      const nextTab = tabInfo[idx + 1];
+      if (nextTab) {
         newActiveTabKey = nextTab.id;
-      } else {
+      }
+
+      if (!prevTab && !nextTab) {
         newActiveTabKey = tabInfo[idx].id;
       }
     }
