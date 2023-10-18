@@ -50,7 +50,6 @@ export const useTab = () => {
 
   const handleClose = (item, evn) => {
     evn.stopPropagation();
-    const idx = tabInfo.findIndex((m) => m.id === item.id);
 
     const filteredTabInfo = tabInfo.filter((m) => m.id !== item.id);
     setTabInfo(filteredTabInfo);
@@ -61,18 +60,24 @@ export const useTab = () => {
       return;
     }
 
+    const idx = tabInfo.findIndex((m) => m.id === item.id);
     let newActiveTabKey = "";
     if (idx > -1 && activeTabKey) {
       const prevTab = tabInfo[idx - 1];
-      const nextTab = tabInfo[idx + 1];
       if (prevTab) {
         newActiveTabKey = prevTab.id;
-      } else if (nextTab) {
+      }
+
+      const nextTab = tabInfo[idx + 1];
+      if (nextTab) {
         newActiveTabKey = nextTab.id;
-      } else {
+      }
+
+      if (!prevTab && !nextTab) {
         newActiveTabKey = tabInfo[idx].id;
       }
     }
+
     setActiveTabKey(newActiveTabKey || "");
     navigateToUrl(newActiveTabKey || "/");
   };
