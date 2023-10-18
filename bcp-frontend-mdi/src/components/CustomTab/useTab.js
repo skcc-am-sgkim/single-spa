@@ -19,16 +19,14 @@ const insertAndShift = (arr, from, to) => {
 
 export const useTab = () => {
   const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO);
-  const storeActiveTabInfo = storeTabInfo?.filter(
-    (m) => m.isActive === true
-  )[0];
-  const [tabInfo, setTabInfo] = useState(storeTabInfo);
+  const storeActiveTabInfo = storeTabInfo?.find((m) => m.isActive) ?? {};
+  const [tabInfo, setTabInfo] = useState(storeTabInfo ?? []);
 
-  const [activeKey, setActiveKey] = useState(storeActiveTabInfo?.id ?? "");
+  const [activeTabKey, setActiveTabKey] = useState(storeActiveTabInfo.id ?? "");
 
   const onTabInfoEventFire = ({ storeTabInfo, activeKey }) => {
     setTabInfo(storeTabInfo);
-    setActiveKey(activeKey);
+    setActiveTabKey(activeKey);
   };
 
   useTabInfoEvent(onTabInfoEventFire);
@@ -45,11 +43,12 @@ export const useTab = () => {
   };
   useUrlChange(onUrlChange);
 
-  const tabClick = (id, evn) => {
+  const handleTabClick = (id, evn) => {
     evn.stopPropagation();
-    setActiveKey(id);
+    setActiveTabKey(id);
   };
-  const closeHandle = (item, evn) => {
+
+  const handleClose = (item, evn) => {
     evn.stopPropagation();
     const idx = tabInfo.findIndex((m) => m.id === item.id);
 
@@ -62,25 +61,24 @@ export const useTab = () => {
       return;
     }
 
-    let active = "";
-    if (idx > -1 && activeKey) {
-      let prevTab = tabInfo[idx - 1];
-      let nextTab = tabInfo[idx + 1];
+    let newActiveTabKey = "";
+    if (idx > -1 && activeTabKey) {
+      const prevTab = tabInfo[idx - 1];
+      const nextTab = tabInfo[idx + 1];
       if (prevTab) {
-        active = prevTab.id;
+        newActiveTabKey = prevTab.id;
       } else if (nextTab) {
-        active = nextTab.id;
+        newActiveTabKey = nextTab.id;
       } else {
-        active = tabInfo[idx].id;
+        newActiveTabKey = tabInfo[idx].id;
       }
     }
-    active = active || "";
-    setActiveKey(active);
-    navigateToUrl(active || "/");
+    setActiveTabKey(newActiveTabKey || "");
+    navigateToUrl(newActiveTabKey || "/");
   };
 
-  const tabDrop = (id, index) => {
-    const oldIndex = [...tabInfo].findIndex((m) => m.id === id);
+  const handleTabDrop = (id, index) => {
+    const oldIndex = tabInfo.findIndex((m) => m.id === id);
     const newData = insertAndShift([...tabInfo], oldIndex, index);
     setTabInfo(newData);
     store.set(LOCAL_STORAGE_KEY.TAB_INFO, newData);
@@ -88,11 +86,12 @@ export const useTab = () => {
 
   const initTab = () => {
     const pathname = window.location.pathname;
-    const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO);
+    const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO) ?? [];
 
-    storeTabInfo?.map((m) => {
-      m.isActive = m.id === pathname;
-    });
+    const updatedTabInfo = storeTabInfo.map((m) => ({
+      ...m,
+      isActive: m.id === pathname,
+    }));
 
     /* 
       case 1. 탭 0개, 타켓 탭 미존재, 주소로 접속  : O
@@ -100,14 +99,15 @@ export const useTab = () => {
       case 3. 탭 x개, 타켓 탭 미존재, 주소로 접속 : O
     */
 
-    store.set(LOCAL_STORAGE_KEY.TAB_INFO, storeTabInfo);
+    store.set(LOCAL_STORAGE_KEY.TAB_INFO, updatedTabInfo);
+
     if (WHITE_LIST.includes(pathname)) {
       // console.log("run?", pathname);
-      let finalTabInfo = storeTabInfo;
-      if (storeTabInfo) {
-        finalTabInfo = unionBy(
+      let newTabInfo = updatedTabInfo;
+      if (updatedTabInfo) {
+        newTabInfo = unionBy(
           [
-            ...storeTabInfo,
+            ...updatedTabInfo,
             {
               id: pathname,
               title: getTitle(pathname),
@@ -117,7 +117,7 @@ export const useTab = () => {
           "id"
         );
       } else {
-        finalTabInfo = [
+        newTabInfo = [
           {
             id: pathname,
             title: getTitle(pathname),
@@ -125,7 +125,7 @@ export const useTab = () => {
           },
         ];
       }
-      store.set(LOCAL_STORAGE_KEY.TAB_INFO, finalTabInfo);
+      store.set(LOCAL_STORAGE_KEY.TAB_INFO, newTabInfo);
     }
 
     window.dispatchEvent(new Event(LOCAL_STORAGE_KEY.TAB_INFO));
@@ -134,14 +134,13 @@ export const useTab = () => {
   // 앱 시작했을때 (주소창에 주소를 바로 쳤을때)
   useEffect(() => {
     initTab();
-    // console.log("init");
   }, []);
 
   return {
     tabInfo,
-    tabClick,
-    tabDrop,
-    closeHandle,
-    activeKey,
+    handleTabClick,
+    handleTabDrop,
+    handleClose,
+    activeTabKey,
   };
 };

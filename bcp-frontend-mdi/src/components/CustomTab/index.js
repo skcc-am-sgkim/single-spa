@@ -3,14 +3,21 @@ import { useTab } from "./useTab";
 import TabBody from "./TabBody";
 
 const CustomTab = () => {
-  const { tabInfo, tabClick, tabDrop, closeHandle, activeKey } = useTab();
+  const { tabInfo, handleTabClick, handleTabDrop, handleClose, activeTabKey } =
+    useTab();
 
   return (
     <div class="w-full">
       <TabHeader
-        data={{ tabInfo, tabClick, tabDrop, closeHandle, activeKey }}
+        data={{
+          tabInfo,
+          handleTabClick,
+          handleTabDrop,
+          handleClose,
+          activeTabKey,
+        }}
       />
-      <TabBody activeKey={activeKey} />
+      <TabBody activeTabKey={activeTabKey} />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { navigateToUrl } from "single-spa";
 import { TabItem, TabWarp } from "./style";
 
 const TabHeader = ({
-  data: { tabInfo, tabClick, tabDrop, closeHandle, activeKey },
+  data: { tabInfo, handleTabClick, handleTabDrop, handleClose, activeTabKey },
 }) => {
   if (
     tabInfo === null ||
@@ -15,10 +15,10 @@ const TabHeader = ({
 
   return (
     <TabWarp
-      activeKey={activeKey}
+      activeKey={activeTabKey}
       style={{ gap: 3, overflow: "auto" }}
-      onTabClick={(id, evn) => tabClick(id, evn)}
-      onTabDrop={(id, index) => tabDrop(id, index)}
+      onTabClick={(id, evn) => handleTabClick(id, evn)}
+      onTabDrop={(id, index) => handleTabDrop(id, index)}
     >
       {tabInfo.map((m, idx) => {
         return (
@@ -31,7 +31,7 @@ const TabHeader = ({
               {m.title}
             </a>
             <button
-              onClick={(evn) => closeHandle(m, evn)}
+              onClick={(evn) => handleClose(m, evn)}
               style={{ background: "yellow" }}
             >
               x
