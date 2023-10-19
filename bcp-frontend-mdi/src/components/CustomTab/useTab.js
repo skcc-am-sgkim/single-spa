@@ -111,8 +111,7 @@ export const useTab = () => {
 
     store.set(LOCAL_STORAGE_KEY.TAB_INFO, updatedTabInfo);
 
-    if (WHITE_LIST.includes(pathname)) {
-      // console.log("run?", pathname);
+    if (WHITE_LIST.find((o) => o === pathname)) {
       let newTabInfo = updatedTabInfo;
       if (updatedTabInfo) {
         newTabInfo = unionBy(
