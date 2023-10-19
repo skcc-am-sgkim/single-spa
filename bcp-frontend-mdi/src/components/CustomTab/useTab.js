@@ -76,6 +76,11 @@ export const useTab = () => {
       if (!prevTab && !nextTab) {
         newActiveTabKey = tabInfo[idx].id;
       }
+
+      // 닫은 탭이 현재탭이 아닌 경우, 현재탭을 그대로 유지
+      if (item.id !== activeTabKey) {
+        newActiveTabKey = activeTabKey;
+      }
     }
 
     setActiveTabKey(newActiveTabKey || "");
