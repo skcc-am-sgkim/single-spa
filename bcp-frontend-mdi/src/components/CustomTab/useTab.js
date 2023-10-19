@@ -37,7 +37,11 @@ export const useTab = () => {
   const onUrlChange = (event) => {
     initTab();
 
-    if (event.state?.current && event.state?.current !== "/") {
+    /* 
+     홈이 아닌 모든 접속 경로를 히스토리로 남길건지, 
+     탭 처럼 WhiteList 안에 있는 경로만 히스토리로 남길건지 논의 필요
+    */
+    if (event.state?.current !== "/") {
       saveHistory({
         path: event.state?.current,
         title: getTitle(event.state?.current),
