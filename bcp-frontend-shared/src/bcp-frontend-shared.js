@@ -43,6 +43,10 @@ export const PATHS = [
 ];
 export const WHITE_LIST = PATHS.map((m) => m.path);
 
+export const getTabInfoFromStore = () => {
+  return store.get(LOCAL_STORAGE_KEY.TAB_INFO)?.filter((m) => m && m.id) ?? [];
+};
+
 export const getTitle = (path) => {
   return PATHS.filter((p) => p.path === path)[0]?.title;
 };

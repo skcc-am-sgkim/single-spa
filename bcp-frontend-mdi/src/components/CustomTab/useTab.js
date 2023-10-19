@@ -1,6 +1,7 @@
 import store from "store";
 import {
   LOCAL_STORAGE_KEY,
+  getTabInfoFromStore,
   WHITE_LIST,
   getTitle,
   saveHistory,
@@ -18,11 +19,13 @@ const insertAndShift = (arr, from, to) => {
 };
 
 export const useTab = () => {
-  const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO);
-  const storeActiveTabInfo = storeTabInfo?.find((m) => m.isActive) ?? {};
-  const [tabInfo, setTabInfo] = useState(storeTabInfo ?? []);
+  const storeTabInfo = getTabInfoFromStore();
+  const storeActiveTabInfo = storeTabInfo?.find((m) => m.isActive);
+  const [tabInfo, setTabInfo] = useState(storeTabInfo);
 
-  const [activeTabKey, setActiveTabKey] = useState(storeActiveTabInfo.id ?? "");
+  const [activeTabKey, setActiveTabKey] = useState(
+    storeActiveTabInfo?.id ?? ""
+  );
 
   const onTabInfoEventFire = ({ storeTabInfo, activeKey }) => {
     setTabInfo(storeTabInfo);
@@ -96,7 +99,7 @@ export const useTab = () => {
 
   const initTab = () => {
     const pathname = window.location.pathname;
-    const storeTabInfo = store.get(LOCAL_STORAGE_KEY.TAB_INFO) ?? [];
+    const storeTabInfo = getTabInfoFromStore();
 
     const updatedTabInfo = storeTabInfo.map((m) => ({
       ...m,
@@ -109,33 +112,20 @@ export const useTab = () => {
       case 3. 탭 x개, 타켓 탭 미존재, 주소로 접속 : O
     */
 
-    store.set(LOCAL_STORAGE_KEY.TAB_INFO, updatedTabInfo);
+    let newTabInfo = updatedTabInfo;
 
-    if (WHITE_LIST.find((o) => o === pathname)) {
-      let newTabInfo = updatedTabInfo;
-      if (updatedTabInfo) {
-        newTabInfo = unionBy(
-          [
-            ...updatedTabInfo,
-            {
-              id: pathname,
-              title: getTitle(pathname),
-              isActive: true,
-            },
-          ],
-          "id"
-        );
-      } else {
-        newTabInfo = [
-          {
-            id: pathname,
-            title: getTitle(pathname),
-            isActive: true,
-          },
-        ];
-      }
-      store.set(LOCAL_STORAGE_KEY.TAB_INFO, newTabInfo);
+    if (WHITE_LIST.includes(pathname)) {
+      const newTab = {
+        id: pathname,
+        title: getTitle(pathname),
+        isActive: true,
+      };
+      newTabInfo = updatedTabInfo
+        ? unionBy([...updatedTabInfo, newTab], "id")
+        : [newTab];
     }
+
+    store.set(LOCAL_STORAGE_KEY.TAB_INFO, newTabInfo);
 
     window.dispatchEvent(new Event(LOCAL_STORAGE_KEY.TAB_INFO));
   };
