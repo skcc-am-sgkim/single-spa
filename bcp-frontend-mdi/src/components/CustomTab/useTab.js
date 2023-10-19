@@ -58,32 +58,29 @@ export const useTab = () => {
     setTabInfo(filteredTabInfo);
     store.set(LOCAL_STORAGE_KEY.TAB_INFO, filteredTabInfo);
 
-    if (tabInfo.length === 1) {
+    // 남은 탭이 존재 하지 않을 경우 홈으로 이동
+    if (filteredTabInfo.length < 1) {
       navigateToUrl("/");
       return;
     }
 
+    // 닫은 탭이 현재탭일 경우에만 다음 탭으로 이동
+    if (item.id !== activeTabKey) return;
+
+    let newActiveTabKey = activeTabKey;
     const idx = tabInfo.findIndex((m) => m.id === item.id);
-    let newActiveTabKey = "";
-    if (idx > -1 && activeTabKey) {
-      const prevTab = tabInfo[idx - 1];
-      if (prevTab) {
-        newActiveTabKey = prevTab.id;
-      }
+    const prevTab = tabInfo[idx - 1];
+    if (prevTab) {
+      newActiveTabKey = prevTab.id;
+    }
 
-      const nextTab = tabInfo[idx + 1];
-      if (nextTab) {
-        newActiveTabKey = nextTab.id;
-      }
+    const nextTab = tabInfo[idx + 1];
+    if (nextTab) {
+      newActiveTabKey = nextTab.id;
+    }
 
-      if (!prevTab && !nextTab) {
-        newActiveTabKey = tabInfo[idx].id;
-      }
-
-      // 닫은 탭이 현재탭이 아닌 경우, 현재탭을 그대로 유지
-      if (item.id !== activeTabKey) {
-        newActiveTabKey = activeTabKey;
-      }
+    if (!prevTab && !nextTab) {
+      newActiveTabKey = tabInfo[idx].id;
     }
 
     setActiveTabKey(newActiveTabKey || "");
