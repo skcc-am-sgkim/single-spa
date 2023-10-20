@@ -51,18 +51,10 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@uiw/react-tabs-draggable": "^1.0.1",
-    "dnd-core": "^16.0.1",
-    "immutability-helper": "^3.1.1",
     "react": "^18.2.0",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-draggable-tab": "^0.10.1",
-    "react-sortable-hoc": "^2.0.0",
     "single-spa-react": "^4.3.1",
-    "sortablejs": "^1.15.0",
     "store": "^2.0.12",
-    "styled-components": "^6.0.8",
-    "webpack-config-single-spa-react-ts": "^4.0.4"
+    "styled-components": "^6.0.8"
   }
 }
