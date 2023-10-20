@@ -22,24 +22,21 @@ const TabHeader = ({
     >
       {tabInfo.map((m, idx) => {
         return (
-          m &&
-          m.id && (
-            <TabItem key={idx} id={m.id} draggable={true}>
-              <a
-                href={`${m.id}`}
-                onClick={navigateToUrl}
-                style={{ padding: "3px 7px" }}
-              >
-                {m.title}
-              </a>
-              <button
-                onClick={(evn) => handleClose(m, evn)}
-                style={{ background: "yellow" }}
-              >
-                x
-              </button>
-            </TabItem>
-          )
+          <TabItem key={idx} id={m.id} draggable={true}>
+            <a
+              href={`${m.id}`}
+              onClick={navigateToUrl}
+              style={{ padding: "3px 7px" }}
+            >
+              {m.title}
+            </a>
+            <button
+              onClick={(evn) => handleClose(m, evn)}
+              style={{ background: "yellow" }}
+            >
+              x
+            </button>
+          </TabItem>
         );
       })}
     </TabWarp>
