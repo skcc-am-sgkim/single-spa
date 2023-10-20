@@ -17,6 +17,7 @@
     This CSP allows any SSL-enabled host and for arbitrary eval(), but you should limit these directives further to increase your app's security.
     Learn more about CSP policies at https://content-security-policy.com/#directive
   -->
+    <!-- frame-src http://single-spa.js.org/;-->
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';"
@@ -39,7 +40,8 @@
         "imports": {
           "react": "https://cdn.jsdelivr.net/npm/react@17.0.1/umd/react.production.min.js",
           "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@17.0.1/umd/react-dom.production.min.js",
-          "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js"
+          "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
+          "store": "https://cdn.jsdelivr.net/npm/store@2.0.12/dist/store.legacy.min.js"
         }
       }
     </script>
@@ -62,7 +64,10 @@
           "@bcp/frontend-gnb": "//localhost:9001/bcp-frontend-gnb.js",
           "@bcp/frontend-snb": "//localhost:9002/bcp-frontend-snb.js",
           "@bcp/frontend-mdi": "//localhost:9003/bcp-frontend-mdi.js",
-          "@bcp/frontend-nexacro": "//localhost:9004/bcp-frontend-nexacro.js"
+          "@bcp/frontend-shared": "//localhost:9005/bcp-frontend-shared.js",
+          "@bcp/frontend-parcel-react": "//localhost:9007/bcp-frontend-parcel-react.js",
+          "@bcp/frontend-parcel-nexacro": "//localhost:9008/bcp-frontend-parcel-nexacro.js",
+          "@bcp/frontend-parcel-vue": "//localhost:9009/js/app.js"
         }
       }
     </script>

@@ -1,11 +1,10 @@
 /* eslint-disable no-console */
-import React from "react";
-import { navigateToUrl } from "single-spa";
+import CustomTab from "./components/CustomTab/index";
 
 export default function Root(props) {
   return (
-    <>
-      <div className="flex items-center h-full px-5">mdi</div>
-    </>
+    <div className="flex items-center px-5">
+      <CustomTab />
+    </div>
   );
 }

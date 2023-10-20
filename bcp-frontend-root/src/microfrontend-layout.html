@@ -25,9 +25,8 @@
 
     <div class="flex-grow flex flex-row">
       <!-- snb -->
-      <div class="w-1/6 bg-slate-100">
-        <application name="@bcp/frontend-snb"></application>
-      </div>
+
+      <application name="@bcp/frontend-snb"></application>
 
       <div class="flex-grow flex flex-col">
         <!-- mdi -->
@@ -35,12 +34,19 @@
           <application name="@bcp/frontend-mdi"></application>
         </div>
 
+        <!-- <application name="@bcp/frontend-standard-react"></application> -->
+        <!-- <route path="react">
+          <div class="flex-grow">
+            <application name="@bcp/frontend-standard-react"></application>
+          </div>
+        </route> -->
+
         <!-- nexacro -->
-        <route path="nexacro">
+        <!-- <route path="nexacro">
           <div class="flex-grow">
             <application name="@bcp/frontend-nexacro"></application>
           </route>
-        </div>
+        </div> -->
         <route default> </route>
       </div>
     </div>

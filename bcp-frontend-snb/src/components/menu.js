@@ -1,67 +1,39 @@
-/* eslint-disable no-console */
-import React from "react";
-import { navigateToUrl } from "single-spa";
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { Tab } from "@headlessui/react";
 
-export default function Menu({ menuList }) {
-  console.log(menuList);
+import FavoritePanel from "./FavoritePanel";
+import HistoryPanel from "./HistoryPanel";
 
-  const sendMessage = (menuId) => {
-    const iframe = document.getElementById("myIframe");
-    if (iframe) {
-      iframe.contentWindow.postMessage(
-        { source: "platform", event: "route", payload: { menu: menuId } },
-        "*"
-      );
-    }
-  };
+import MenuPanel from "./MenuPanel";
+import SideMenuFrame from "./SideMenuFrame";
 
+export default function Menu() {
   return (
-    <>
-      <div className="px-5 pt-7 ">
-        <span>snb</span>
-        <span className="px-5 ">
-          <a href="/" className="underline " onClick={navigateToUrl}>
-            home
-          </a>
-        </span>
-        <p className="font-semibold text-lg mt-10">nexacro</p>
-        <ul className="px-10 pt-3 list-disc list-outside leading-8">
-          <li>
-            <a
-              href="/nexacro?menu=3"
-              className="underline "
-              onClick={navigateToUrl}
-            >
-              Hello page url
-            </a>
-          </li>
-          <li>
-            <a
-              href="/nexacro?menu=4"
-              className="underline "
-              onClick={navigateToUrl}
-            >
-              World page url
-            </a>
-          </li>
-          <li>
-            <button
-              className="underline text-left"
-              onClick={() => sendMessage(3)}
-            >
-              Hello page event
-            </button>
-          </li>
-          <li>
-            <button
-              className="underline text-left"
-              onClick={() => sendMessage(4)}
-            >
-              World page event
-            </button>
-          </li>
-        </ul>
-      </div>
-    </>
+    <SideMenuFrame>
+      <Tab.Group>
+        <Tab.List>
+          <Tab>
+            <span class="material-symbols-outlined">list</span>
+          </Tab>
+          <Tab>
+            <span class="material-symbols-outlined">history</span>
+          </Tab>
+          <Tab>
+            <span class="material-symbols-outlined ">bookmark</span>
+          </Tab>
+        </Tab.List>
+        <Tab.Panels>
+          <Tab.Panel>
+            <MenuPanel />
+          </Tab.Panel>
+          <Tab.Panel>
+            <HistoryPanel />
+          </Tab.Panel>
+          <Tab.Panel>
+            <FavoritePanel />
+          </Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
+    </SideMenuFrame>
   );
 }
